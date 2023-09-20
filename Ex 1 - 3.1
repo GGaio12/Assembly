@@ -1,0 +1,21 @@
+# Program to sum all the numbers of a list and print it in the console
+	.data
+tab:	.word 1,2,3,4,5,6,7,8,9,10
+
+	.text
+li $t0,0
+li $t1,10
+la $t2,tab
+
+ciclo:
+	beq $t0,$t1,fim
+	lw $t3,0($t2)
+	add $v0,$v0,$t3
+	addi $t2,$t2,4
+	addi $t0,$t0,1
+	j ciclo
+	
+fim:
+	move $a0,$v0
+	li $v0,1
+	syscall

@@ -1,0 +1,12 @@
+	.text
+# Initializations nums
+li $a0,10
+li $a1,6
+li $a2,7
+li $a3,10
+
+# v0 = (a0-a2) – (a1-a3) + 5
+sub $t0,$a0,$a2
+sub $t1,$a1,$a3
+sub $v0,$t0,$t1
+addi $v0,$v0,5
