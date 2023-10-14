@@ -1,0 +1,31 @@
+	.data
+tab: .byte 0x3f,0x06,0x5b,0x4f,0x66,0x6d,0x7d,0x07,0x7f,0x6f #numbers 0 to 9
+
+	.text
+start:
+	li $s6,0
+	
+firstdisplay:
+	li $s0,0xFFFF0010 #right display
+	la $s2,tab
+	
+cicle:
+	lbu $s1,0($s2)
+	sb $s1,0($s0)
+	addi $s2,$s2,1
+	beq $s1,0x3f,seconddisplay
+	bne $s1,0x6f,cicle
+	j firstdisplay
+	
+seconddisplay:
+	bne $s6,$zero,cicle2
+	li $s3,0xFFFF0011 #left display
+	la $s4,tab
+	
+cicle2:
+	beq $s6,10,start
+	lbu $s5,0($s4)
+	sb $s5,0($s3)
+	addi $s4,$s4,1
+	addi $s6,$s6,1
+	j cicle
