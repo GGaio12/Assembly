@@ -1,0 +1,12 @@
+	.data
+
+	.text
+start:
+	li $s0,0xFFFF0012 #line
+	li $s1,0xFFFF0014 #colun
+	
+reed:
+	lbu $s2,0($s0)
+	lbu $s3,0($s1)
+	and 
+	j reed
