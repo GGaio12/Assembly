@@ -1,0 +1,25 @@
+	.text
+li $a0,0x10010000
+li $s0,0x00FFFF00
+li $t0,0
+li $t1,30
+li $t3,0
+li $t4,20
+li $s1,64
+
+Paint:
+	beq $t0,$t1,ChangeLine
+	bgt $t3,$t4,End
+	sw $s0,0($a0)
+	addi $a0,$a0,4
+	addi $t0,$t0,1
+	j Paint
+
+ChangeLine:
+	sub $t5,$s1,$t0
+	mul $t5,$t5,4
+	add $a0,$a0,$t5
+	addi $t3,$t3,1
+	li $t0,0
+	j Paint
+End:
