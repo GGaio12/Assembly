@@ -1,0 +1,36 @@
+	.data
+str:	.asciiz "Uma string"
+char1:	.ascii "u"
+char2:	.ascii "a"
+
+	.text
+la $t0,str
+la $t1,char1
+la $t2,char2
+lbu $a0,0($t0)
+lbu $a1,0($t1)
+lbu $a2,0($t2)
+li $t3,0
+jal func
+la $a0,0($t0)
+li $v0,4
+syscall
+j End
+
+func:
+	lbu $a0,0($t0)
+	beq $a0,$zero,endFunc
+	beq $a0,$a1,change
+	addi $t0,$t0,1
+	addi $t3,$t3,1
+	endFunc:
+		sub $t0,$t0,$t3
+		jr $ra
+		
+change:
+	sb $a2,0($t0)
+	addi $t0,$t0,1
+	addi $t3,$t3,1
+	j func
+
+End:
