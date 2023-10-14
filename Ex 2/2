@@ -1,0 +1,44 @@
+	.text
+li $a0,0x10010000  #first pixel
+li $s0,0x000000FF  #blue
+li $s2,64          #max num of pixels
+li $s3,0	   #controls if its blue or magenta
+#blue square
+li $t0,0
+li $t1,64
+li $t3,0
+li $t4,32
+
+Paint:
+	beq $t0,$t1,ChangeLine
+	bgt $t3,$t4,Next
+	sw $s0,0($a0)
+	addi $a0,$a0,4
+	addi $t0,$t0,1
+	j Paint
+
+ChangeLine:
+	sub $t5,$s2,$t0
+	mul $t5,$t5,4
+	add $a0,$a0,$t5
+	addi $t3,$t3,1
+	li $t0,0
+	j Paint
+
+Next:
+	addi $s3,$s3,1
+	beq $s3,1,ChangeToMagenta
+	beq $s3,2,End
+
+ChangeToMagenta:
+	li $s0,0x00FF00FF  #magenta color
+	li $a0,0x10010000  #first pixel
+	addi $a0,$a0,3184  #first magenta pixel
+	#magenta square
+	li $t0,0
+	li $t1,8
+	li $t3,0
+	li $t4,8
+	j Paint
+
+End:
