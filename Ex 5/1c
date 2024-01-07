@@ -1,0 +1,24 @@
+	.data
+str:	.asciiz "Uma string"
+
+	.text
+la $a0,str
+jal lower_to_upper
+la $a0,str
+li $v0,4
+syscall
+li $v0,10
+syscall
+
+lower_to_upper:
+lbu $t0,0($a0)
+beq $t0,$zero,end_func
+bgtu $t0,0x7A,next
+bltu $t0,0x61,next
+andi $t0,$t0,0xDF
+sb $t0,0($a0)
+next:
+addi $a0,$a0,1
+j lower_to_upper
+end_func:
+jr $ra

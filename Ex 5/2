@@ -1,0 +1,47 @@
+	.data
+str:	.space 32
+char:	.space 1
+	.text
+#ask for the message
+la $a0,str
+li $a1,32
+li $v0,8
+syscall
+move $t0,$a0
+#ask for a char
+la $a0,char
+li $a1,2
+li $v0,8
+syscall
+move $a1,$t0
+#encript
+jal encriptString
+#print encripted message
+la $a0,str
+li $v0,4
+syscall
+#decript
+la $a0,char
+la $a1,str
+jal encriptString
+#print decripted message
+la $a0,str
+li $v0,4
+syscall
+
+#close program
+li $v0,10
+syscall
+
+
+encriptString:
+lbu $t0,0($a0) #char
+cicle:
+lbu $t1,0($a1) #str
+beq $t1,$zero,end_func
+xor $t1,$t1,$t0
+sb $t1,0($a1)
+addi $a1,$a1,1
+j cicle
+end_func:
+jr $ra
